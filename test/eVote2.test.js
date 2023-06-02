@@ -111,22 +111,16 @@ describe('Election 2', () => {
   });
   
   it("Registers votes", async () => {
-    let listOfVotes = await election.getVotesList();
-    expect(listOfVotes).to.have.lengthOf(0);
-    
-    await election.connect(addr1).vote(1, 5);
-    await election.connect(addr2).vote(5, 1);
-    await election.connect(addr3).vote(4, 3);
-    await election.connect(addr4).vote(3, 4);
-    await election.connect(addr5).vote(2, 3);
-    await election.connect(addr6).vote(2, 4);
-    await election.connect(addr7).vote(1, 0);
-    await election.connect(addr8).vote(1, 5);
-    await election.connect(addr9).vote(3, 0);
-    await election.connect(addr10).vote(2, 3);
-    
-    listOfVotes = await election.getVotesList();
-    expect(listOfVotes).to.have.lengthOf(10);
+    await expect(election.connect(addr1).vote(1, 5)).not.to.be.reverted;
+    await expect(election.connect(addr2).vote(5, 1)).not.to.be.reverted;
+    await expect(election.connect(addr3).vote(4, 3)).not.to.be.reverted;
+    await expect(election.connect(addr4).vote(3, 4)).not.to.be.reverted;
+    await expect(election.connect(addr5).vote(2, 3)).not.to.be.reverted;
+    await expect(election.connect(addr6).vote(2, 4)).not.to.be.reverted;
+    await expect(election.connect(addr7).vote(1, 0)).not.to.be.reverted;
+    await expect(election.connect(addr8).vote(1, 5)).not.to.be.reverted;
+    await expect(election.connect(addr9).vote(3, 0)).not.to.be.reverted;
+    await expect(election.connect(addr10).vote(2, 3)).not.to.be.reverted;
   });
   
   it("REVERT when double voting", async () => {
@@ -149,6 +143,9 @@ describe('Election 2', () => {
     
     firstStage = await election.firstStageLock();
     expect(firstStage).to.equal(true);
+    
+    listOfVotes = await election.getVotesList();
+    expect(listOfVotes).to.have.lengthOf(10);
     
     listOfParties = await election.getPartiesList();
     //console.log(listOfParties);
