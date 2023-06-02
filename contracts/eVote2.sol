@@ -34,7 +34,7 @@ contract Election2 {
 
     Party[] public Parties;
     mapping(address => bool) public Voters;
-    Vote[] public Votes;
+    Vote[] private Votes;
     address[] public Moderators;
     string public description;
     uint public startTime;
@@ -92,6 +92,7 @@ contract Election2 {
     }
 
     function getVotesList() public view returns (Vote[] memory) {
+        require(firstStageLock == true, "First stage must be called first.");
         return Votes;
     }
     
